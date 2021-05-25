@@ -1,6 +1,17 @@
 import logo from './logo.svg';
 import './App.css';
 
+/*
+
+App:
+state:
+  todos: [{short_name: "title", desc: "Description", done: boolean, deadline: Date}]
+  
+methods: 
+new_task
+check_task
+*/
+
 function App() {
   return (
     <div className="App">
