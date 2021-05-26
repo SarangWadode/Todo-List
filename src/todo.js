@@ -9,7 +9,7 @@ export default class Todo extends Component{
   }
   render(){
     return <>
-      {this.state.short_name}
+      {this.state.title}
     </>
   }
 }

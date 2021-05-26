@@ -17,7 +17,7 @@ class App extends Component{
     // Temporary task for testing
     this.state = {
       todos: [{
-        short_name: "Create todo App",
+        title: "Create todo App",
         desc: "We're creating a todo app... smile in pain",
         deadline: Date.now(),
         done: false
@@ -47,11 +47,34 @@ class App extends Component{
       return temp;
     })
   }
-  
   new_task(event){
-    event.preventDefault();
+    event.preventDefault(); // Prevent reloading, form submit
+    if(this.state.inputs.tname === "") return;
+
+    this.setState(state=>{
+      const new_task = {
+        title: state.inputs.tname,
+        desc: state.inputs.desc,
+        deadline: state.inputs.deadline,
+        done: false
+      };
+      
+      const newState = {...state};
+      console.log(newState, state);
+      newState.todos = [...state.todos, new_task];
+      newState.inputs = {
+        tname: "",
+        desc: "",
+        deadline: ""
+      }
+      // Close the modal after addition
+      newState.modalOpen = false;
+      return newState;
+    })
   }
+
   check_task(){}
+
   toggle_form() {
     this.setState(state=>({
       ...state,
@@ -71,7 +94,8 @@ class App extends Component{
         })}
       </TaskList>
     </Box>
-    <NewTaskMenu open={this.state.modalOpen}>
+    
+    <NewTaskMenu open={this.state.modalOpen} onSubmit={this.new_task}>
       <span onClick={this.toggle_form}>❌</span>
       
       <label>Task Name: 
@@ -86,7 +110,7 @@ class App extends Component{
         <input type="datetime-local" name="deadline" value={this.state.inputs.deadline} 
           onChange={this.handleInputChange} />
       </label>
-      <input type="submit" value="Add TODO" onClick={this.new_task} />
+      <input type="submit" value="Add TODO"/>
     </NewTaskMenu>
     </>
   }
